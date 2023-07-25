@@ -21,8 +21,8 @@ class User {
   @Column({ type: "varchar", length: 60, unique: true })
   email: string;
 
-  @Column({ type: "integer", unique: true })
-  telephone: number;
+  @Column({ type: "varchar", length: 11, unique: true })
+  telephone: string;
 
   @Column({ type: "varchar", length: 120 })
   password: string;

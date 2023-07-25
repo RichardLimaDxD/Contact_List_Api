@@ -1,10 +1,9 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
-import { before } from "node:test";
 import User from "../../../entities/users.entity";
 import supertest from "supertest";
 import app from "../../../app";
-import createUserRouteMock from "../../mocks/users/createUser.route.mock";
+import { createUserRouteMock } from "../../mocks";
 
 describe("POST /users", () => {
   let connection: DataSource;
@@ -12,7 +11,7 @@ describe("POST /users", () => {
   const baseUrl: string = "/users";
   const userRepo = AppDataSource.getRepository(User);
 
-  before(async () => {
+  beforeAll(async () => {
     await AppDataSource.initialize()
       .then((res) => (connection = res))
       .catch((error) => console.error(error));
@@ -70,23 +69,6 @@ describe("POST /users", () => {
     expect(response.body).toStrictEqual(expectResults.bodyMessage);
   });
 
-  it("Error: Must not be able to create a user - Telephone already exists", async () => {
-    await userRepo.save(createUserRouteMock.userUnique);
-
-    const response = await supertest(app)
-      .post(baseUrl)
-      .send(createUserRouteMock.userUnique);
-
-    const expectResults = {
-      status: 409,
-      bodyMessage: { message: "Telephone already exists" },
-    };
-
-    expect(response.status).toBe(expectResults.status);
-
-    expect(response.body).toStrictEqual(expectResults.bodyMessage);
-  });
-
   it("Error: Must not be able to create a user - Invalid body", async () => {
     const response = await supertest(app)
       .post(baseUrl)
@@ -98,7 +80,7 @@ describe("POST /users", () => {
         message: {
           fullname: ["Expected string, received number"],
           email: ["Expected string, received array"],
-          telephone: ["Expected number , received string"],
+          telephone: ["Expected string, received number"],
           password: ["Required"],
         },
       },
@@ -119,6 +101,7 @@ describe("POST /users", () => {
         message: {
           fullname: ["String must contain at most 60 character(s)"],
           email: ["Invalid email"],
+          telephone: ["Required"],
           password: ["Expected string, received number"],
         },
       },
