@@ -1,11 +1,20 @@
 import { Router } from "express";
-import { createUserController } from "../controllers/users.controller";
+import {
+  createUserController,
+  deleteUserController,
+  readUserController,
+  updateUserController,
+} from "../controllers/users.controller";
 import { validateBodyMiddleware } from "../middlewares/validatedBody.middleware";
-import { userRequestSchema } from "../schemas/user.schema";
+import { userPatchSchema, userRequestSchema } from "../schemas/user.schema";
 import {
   emailExistsMIddleware,
+  fullnameExistsMIddleware,
+  idExistsMiddleware,
   telephoneExistsMIddleware,
+  verifyUserMiddleware,
 } from "../middlewares/verify.middleware";
+import { validatedTokenMiddleware } from "../middlewares/validatedToken.middleware";
 
 const usersRoute: Router = Router();
 
@@ -13,8 +22,36 @@ usersRoute.post(
   "",
   validateBodyMiddleware(userRequestSchema),
   emailExistsMIddleware,
+  fullnameExistsMIddleware,
   telephoneExistsMIddleware,
   createUserController
+);
+
+usersRoute.get(
+  "/:id",
+  validatedTokenMiddleware,
+  verifyUserMiddleware,
+  readUserController
+);
+
+usersRoute.patch(
+  "/:id",
+  validatedTokenMiddleware,
+  verifyUserMiddleware,
+  idExistsMiddleware,
+  validateBodyMiddleware(userPatchSchema),
+  fullnameExistsMIddleware,
+  emailExistsMIddleware,
+  telephoneExistsMIddleware,
+  updateUserController
+);
+
+usersRoute.delete(
+  "/:id",
+  validatedTokenMiddleware,
+  verifyUserMiddleware,
+  idExistsMiddleware,
+  deleteUserController
 );
 
 export { usersRoute };
