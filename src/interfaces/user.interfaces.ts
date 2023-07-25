@@ -5,6 +5,7 @@ import {
   userResponseSchema,
   userSchema,
 } from "../schemas/user.schema";
+import { DeepPartial } from "typeorm";
 
 type Tuser = z.infer<typeof userSchema>;
 
@@ -14,4 +15,6 @@ type TuserResponse = z.infer<typeof userResponseSchema>;
 
 type TuserArray = z.infer<typeof userArraySchema>;
 
-export { Tuser, TuserRequest, TuserResponse, TuserArray };
+type TuserPatch = DeepPartial<TuserRequest>;
+
+export { TuserPatch, Tuser, TuserRequest, TuserResponse, TuserArray };

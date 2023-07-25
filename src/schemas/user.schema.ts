@@ -22,4 +22,12 @@ const userResponseSchema = userSchema.omit({ password: true });
 
 const userArraySchema = userResponseSchema.array();
 
-export { userSchema, userRequestSchema, userResponseSchema, userArraySchema };
+const userPatchSchema = userRequestSchema.partial();
+
+export {
+  userPatchSchema,
+  userSchema,
+  userRequestSchema,
+  userResponseSchema,
+  userArraySchema,
+};
