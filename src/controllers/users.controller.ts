@@ -15,6 +15,8 @@ const createUserController = async (
 ): Promise<Response> => {
   const data: TuserRequest = request.body;
 
+  console.log(data);
+
   const newData: TuserResponse = await createUserService(data);
 
   return response.status(201).json(newData);

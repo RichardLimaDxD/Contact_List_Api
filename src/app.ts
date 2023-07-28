@@ -5,10 +5,13 @@ import { errorHandle } from "./error/error";
 import { usersRoute } from "./routes/users.route";
 import { loginRoute } from "./routes/login.route";
 import { contactRoutes } from "./routes/contacts.route";
+import cors from "cors";
 
 const app: Application = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 app.use("/users", usersRoute);
 
