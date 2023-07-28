@@ -3,6 +3,7 @@ import {
   createUserController,
   deleteUserController,
   readUserController,
+  retrieveUserController,
   updateUserController,
 } from "../controllers/users.controller";
 import { validateBodyMiddleware } from "../middlewares/validatedBody.middleware";
@@ -26,6 +27,8 @@ usersRoute.post(
   telephoneExistsMIddleware,
   createUserController
 );
+
+usersRoute.get("", validatedTokenMiddleware, retrieveUserController);
 
 usersRoute.get(
   "/:id",
