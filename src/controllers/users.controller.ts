@@ -8,6 +8,7 @@ import {
 import { readUserService } from "../services/users/readUser.service";
 import { updateUserService } from "../services/users/updateUser.service";
 import { deleteUserService } from "../services/users/deleteUser.service";
+import { retrieveUserService } from "../services/users/retrieveUser.service";
 
 const createUserController = async (
   request: Request,
@@ -26,9 +27,20 @@ const readUserController = async (
 ): Promise<Response> => {
   const id: number = parseInt(request.params.id);
 
-  const data = await readUserService(id);
+  const data: TuserResponse = await readUserService(id);
 
   return response.status(200).json(data);
+};
+
+const retrieveUserController = async (
+  request: Request,
+  response: Response
+): Promise<Response> => {
+  const id: number = parseInt(response.locals.id);
+
+  const newData = await retrieveUserService(id);
+
+  return response.status(200).json(newData);
 };
 
 const updateUserController = async (
@@ -58,6 +70,7 @@ const deleteUserController = async (
 export {
   createUserController,
   readUserController,
+  retrieveUserController,
   updateUserController,
   deleteUserController,
 };
