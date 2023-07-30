@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import { User } from "../../../entities";
-import { errorsMock, tokenMock, updateUserRouteMock } from "../../mocks";
+import { tokenMock, updateUserRouteMock } from "../../mocks";
 import supertest from "supertest";
 import app from "../../../app";
 
