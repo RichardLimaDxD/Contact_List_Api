@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
+import "dotenv/config";
 
 const validateBodyMiddleware =
   (schema: ZodTypeAny) =>

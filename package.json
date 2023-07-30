@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node-dev --rs --cls --ignore-watch node_modules src/server.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose --runInBand"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.13",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
@@ -31,6 +36,7 @@
     "sqlite3": "^5.1.6",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.6"
   }
 }
